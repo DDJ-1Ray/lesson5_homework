@@ -15,13 +15,14 @@ namespace text_8._1
             ord2.allprice = 200;
             orderlist.Add(ord1);
             orderlist.Add(ord2);
+            //Console.WriteLine(orderlist.Count);
             bool flag = true;
             while (flag)
             {
                 Console.WriteLine("請選擇操作");
-                Console.WriteLine("+:新增訂單,-:刪除訂單,*:查詢訂單,=:顯示所有訂單,/:退出操作");
+                Console.WriteLine("+:新增訂單,-:刪除訂單,*:查詢訂單,=:顯示所有訂單,!:排序操作,/:退出操作");
                 string str=Console.ReadLine();
-                int id = 3;
+                int id = orderlist.Count+1;
                 switch (str)
                 {
                     case "+":
@@ -36,10 +37,14 @@ namespace text_8._1
                     case "=":
                         PrinteOrder();
                         break;
+                    case "!":
+                        ReOrderList();
+                        break;
                     case "/":
                         Console.WriteLine("已退出操作");
                         flag = false;
                         break;
+                    
                     default:
                         Console.WriteLine("輸入錯誤,請再輸入一次");
                         break;
@@ -118,11 +123,6 @@ namespace text_8._1
             {
                 Console.WriteLine("輸入錯誤,請輸入整數");
             }
-            
-
-
-
-
         }
         public void ReMoveNewOrder()
         {
@@ -149,6 +149,9 @@ namespace text_8._1
         }
         public void PrinteOrder()
         {
+            
+
+
             if (orderlist.Count <= 0)
                 Console.WriteLine("沒有訂單");
             foreach(Order x in orderlist)
@@ -212,6 +215,39 @@ namespace text_8._1
                 Console.WriteLine("輸入錯誤,請輸入整數");
             }
             
+
+        }
+        public bool ReOrderList()
+        {
+            if (orderlist.Count <= 0)
+            {
+                Console.WriteLine("沒有訂單");
+                return false;
+            }
+            Console.WriteLine("請選擇排序方式");
+            Console.WriteLine("1:訂單號順序,2:訂單號逆序,3:總金額大至小,4:總金額小至大");
+            string str3 = Console.ReadLine();
+            switch (str3)
+            {
+                case "1":
+                    orderlist.Sort((p1,p2)=>p1.OrderId-p2.OrderId);
+                    break;
+                case "2":
+                    orderlist.Sort((p1, p2) => p2.OrderId - p1.OrderId);
+                    break;
+                case "3":
+                    orderlist.Sort((p1, p2) => p2.allprice - p1.allprice);
+                    break;
+                case "4":
+                    orderlist.Sort((p1, p2) => p1.allprice - p2.allprice);
+                    break;
+                default:
+                    Console.WriteLine("輸入錯誤,請輸入數字1或數字2");
+                    break;
+
+            }
+            Console.WriteLine("排序成功");
+            return true;
 
         }
     }
